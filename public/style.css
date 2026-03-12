@@ -189,10 +189,13 @@ input[type="text"]:focus {
     position: relative;
     padding-top: 40px; /* Space for the floating tooltip */
     margin-bottom: var(--spacing-sm);
+    display: block; /* Ensure it takes full width of parent */
+    width: 100%;
 }
 
 input[type="range"] {
-    flex: 1;
+    display: block;
+    width: 100%;
     -webkit-appearance: none;
     background: transparent;
     cursor: pointer;
