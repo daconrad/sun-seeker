@@ -17,9 +17,19 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLat = null;
     let currentLon = null;
 
-    // Update temperature badge on slider move
+    // Update temperature badge and thumb color on slider move
     targetTempInput.addEventListener('input', (e) => {
-        tempDisplay.innerHTML = `${e.target.value}&deg;F`;
+        const val = parseInt(e.target.value);
+        tempDisplay.innerHTML = `${val}&deg;F`;
+        
+        // Update the CSS variable for the thumb color so it matches the thermometer gradient
+        let color = '#f59e0b'; // default amber
+        if (val < 70) color = '#3b82f6'; // blue
+        else if (val < 80) color = '#10b981'; // green
+        else if (val < 90) color = '#f59e0b'; // amber
+        else color = '#ef4444'; // red
+        
+        document.documentElement.style.setProperty('--thumb-color', color);
     });
 
     // Handle "Use Location" button
