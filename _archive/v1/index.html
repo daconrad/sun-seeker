@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sun Seeker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Sun Seeker</h1>
+
+    <div id="location-input">
+        <p>Enter your location:</p>
+        <button id="detect-location">Detect My Location</button>
+        <input type="text" id="zip-code" placeholder="Enter ZIP Code">
+        <button id="submit-zip">Submit</button>
+    </div>
+
+    <div id="temperature-input">
+        <p>Enter your target temperature (Fahrenheit):</p>
+        <input type="number" id="target-temp" placeholder="e.g., 75">
+        <button id="find-destinations">Find Destinations</button>
+    </div>
+
+    <div id="results">
+        <h2>Destinations:</h2>
+        <ul id="destinations-list">
+            <!-- Destinations will be displayed here -->
+        </ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

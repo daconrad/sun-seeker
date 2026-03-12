@@ -1,0 +1,16 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+#results {
+    width: 80%;
+    max-width: 600px;
+}

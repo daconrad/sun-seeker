@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sun Seeker | Find Your Perfect Escape</title>
+    <meta name="description" content="Find the closest warm-weather destinations based on your location and target temperature.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-elements">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <main class="app-container">
+        <header>
+            <div class="logo-container">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <h1>Sun Seeker</h1>
+            </div>
+            <p class="subtitle">Find your closest warm-weather escape.</p>
+        </header>
+
+        <section class="glass-card search-params">
+            <form id="search-form">
+                <div class="form-group">
+                    <label for="originZip">Origin Location (Zip Code)</label>
+                    <div class="input-with-action">
+                        <input type="text" id="originZip" placeholder="e.g. 98101" pattern="[0-9]{5}">
+                        <span class="splitter">OR</span>
+                        <button type="button" id="useLocationBtn" class="btn btn-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Detect Location
+                        </button>
+                    </div>
+                    <div id="locationStatus" class="status-msg"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="targetTemp">Target Temperature (&deg;F)</label>
+                    <div class="slider-container">
+                        <input type="range" id="targetTemp" min="60" max="100" value="75">
+                        <span id="tempDisplay" class="temp-badge">75&deg;F</span>
+                    </div>
+                </div>
+
+                <button type="submit" id="searchBtn" class="btn btn-primary btn-large">
+                    Find Destinations
+                </button>
+            </form>
+        </section>
+
+        <section id="loading-state" class="state-container hidden">
+            <div class="spinner"></div>
+            <p>Scanning the horizon for warm weather...</p>
+        </section>
+
+        <section id="error-state" class="state-container hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-error"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <p id="errorMessage">Something went wrong.</p>
+        </section>
+
+        <section id="results-container" class="results-container hidden">
+            <h2>Your Top Escapes</h2>
+            <div id="destinationsList" class="destinations-grid">
+                <!-- Destinations will be injected here via JS -->
+            </div>
+        </section>
+    </main>
+
+    <template id="destination-card-template">
+        <div class="destination-card glass-card">
+            <div class="card-header">
+                <h3 class="dest-name">Destination Name</h3>
+                <span class="dest-state">ST</span>
+            </div>
+            <div class="card-body">
+                <div class="weather-info">
+                    <img class="weather-icon" src="" alt="Weather" width="50" height="50">
+                    <div class="temp-display">
+                        <span class="dest-temp">80</span><span class="unit">&deg;F</span>
+                        <div class="condition">Sunny</div>
+                    </div>
+                </div>
+                <div class="distance-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span class="dest-dist">500 miles away</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="#" target="_blank" rel="noopener noreferrer" class="maps-link btn btn-outline">
+                    View on Google Maps
+                </a>
+            </div>
+        </div>
+    </template>
+
+    <script src="main.js"></script>
+</body>
+</html>
