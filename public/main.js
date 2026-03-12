@@ -130,8 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         results.forEach(dest => {
             const clone = template.content.cloneNode(true);
             
-            clone.querySelector('.dest-name').textContent = dest.name;
-            clone.querySelector('.dest-state').textContent = dest.state;
+            clone.querySelector('.dest-name').textContent = `${dest.name}, ${dest.state}`;
             
             clone.querySelector('.dest-temp').textContent = dest.temperature;
             clone.querySelector('.condition').textContent = dest.condition;
