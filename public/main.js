@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const useLocationBtn = document.getElementById('useLocationBtn');
     const locationStatus = document.getElementById('locationStatus');
     const targetTempInput = document.getElementById('targetTemp');
-    const tempDisplay = document.getElementById('tempDisplay');
+    const tempTooltip = document.getElementById('tempTooltip');
     const searchBtn = document.getElementById('searchBtn');
     
     const loadingState = document.getElementById('loading-state');
@@ -17,20 +17,38 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLat = null;
     let currentLon = null;
 
-    // Update temperature badge and thumb color on slider move
-    targetTempInput.addEventListener('input', (e) => {
-        const val = parseInt(e.target.value);
-        tempDisplay.innerHTML = `${val}&deg;F`;
+    // Function to update the tooltip value, position, and color
+    function updateSliderTooltip() {
+        const val = parseInt(targetTempInput.value);
+        const min = parseInt(targetTempInput.min) || 60;
+        const max = parseInt(targetTempInput.max) || 100;
         
-        // Update the CSS variable for the thumb color so it matches the thermometer gradient
+        tempTooltip.innerHTML = `${val}&deg;F`;
+        
+        // Calculate position percentage
+        const percent = (val - min) / (max - min);
+        
+        // Account for thumb width (24px) so the tooltip stays perfectly centered over it at the edges
+        const thumbWidth = 24;
+        const offset = (0.5 - percent) * thumbWidth;
+        
+        tempTooltip.style.left = `calc(${percent * 100}% + ${offset}px)`;
+        
+        // Update color
         let color = '#f59e0b'; // default amber
-        if (val < 70) color = '#3b82f6'; // blue
-        else if (val < 80) color = '#10b981'; // green
-        else if (val < 90) color = '#f59e0b'; // amber
-        else color = '#ef4444'; // red
+        if (val < 70) color = '#3b82f6';
+        else if (val < 80) color = '#10b981';
+        else if (val < 90) color = '#f59e0b';
+        else color = '#ef4444';
         
         document.documentElement.style.setProperty('--thumb-color', color);
-    });
+    }
+
+    // Initialize tooltip
+    updateSliderTooltip();
+
+    // Listen for slider movement
+    targetTempInput.addEventListener('input', updateSliderTooltip);
 
     // Handle "Use Location" button
     useLocationBtn.addEventListener('click', () => {
