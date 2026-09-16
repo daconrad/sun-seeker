@@ -115,12 +115,27 @@ app.get('/api/geocode', async (req, res) => {
     const { zip } = req.query;
     if (!zip) return res.status(400).json({ error: 'Zip code required' });
     
+    if (!OPENWEATHER_API_KEY) {
+        console.error("OPENWEATHER_API_KEY is not set");
+        return res.status(500).json({ error: 'Server misconfiguration: weather API key is not set' });
+    }
+
     try {
-        const response = await axios.get(`http://api.openweathermap.org/geo/1.0/zip?zip=${zip},US&appid=${OPENWEATHER_API_KEY}`);
+        const response = await axios.get(`https://api.openweathermap.org/geo/1.0/zip?zip=${zip},US&appid=${OPENWEATHER_API_KEY}`);
         res.json(response.data);
     } catch (err) {
+        const status = err?.response?.status;
         console.error("Geocoding error", err?.response?.data || err.message);
-        res.status(404).json({ error: 'Zip code not found' });
+
+        // A 401 means the API key is missing or invalid — don't mask it as a bad zip.
+        if (status === 401) {
+            return res.status(500).json({ error: 'Weather API rejected the request (invalid API key)' });
+        }
+        // A 404 from OpenWeather genuinely means the zip wasn't found.
+        if (status === 404) {
+            return res.status(404).json({ error: 'Zip code not found' });
+        }
+        return res.status(502).json({ error: 'Failed to look up zip code' });
     }
 });
 
